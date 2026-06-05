@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Details</title>
+  <link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+    <style>
+      .product-container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        padding: 1rem;
+      }
+
+      .image-gallery {
+        flex: 1 1 500px;
+        width: 100%;
+        background: var(--bg-color);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .main-image img {
+        width: 100%;
+        border-radius: 1rem;
+        max-height: 500px;
+        object-fit: cover;
+        transition: opacity 0.3s ease;
+      }
+
+      .thumbnails {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .thumbnails img {
+        height: 70px;
+        border-radius: 0.5rem;
+        padding: 5px;
+        object-fit: cover;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: transform 0.2s;
+      }
+
+      .thumbnails img.active {
+        border-color: #333;
+        transform: scale(1.05);
+      }
+
+      .product-section {
+        flex: 1 1 500px;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .brand {
+        font-size: 1rem;
+        color: #6b7280;
+      }
+
+      .product-name {
+        font-size: 2rem;
+        font-weight: bold;
+      }
+      .product-name:hover {
+        text-decoration: none;
+        color: var(--text-color);
+      }
+
+      .rating {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        font-size: 0.9rem;
+        color: #f59e0b;
+      }
+
+      .colors,
+      .sizes {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        gap: 0.3rem;
+      }
+
+      .color-selector {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .color-dot {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 2px solid transparent;
+      }
+
+      .color-dot.selected {
+        border-color: #6366f1;
+        transform: scale(1.1);
+      }
+
+      .sizes .size-option {
+        display: inline-block;
+        margin-top: 0.3rem;
+        padding: 0.3rem 1rem;
+        border: 1px solid #ccc;
+        border-radius: 0.3rem;
+        cursor: pointer;
+        margin-right: 0.5rem;
+      }
+
+      .size-option.selected {
+        background-color: #1a1a1a;
+        color: #ffffff;
+        font-weight: 600;
+      }
+
+      .price {
+        font-size: 1.5rem;
+        color: var(--text-color);
+        font-weight: bold;
+      }
+
+      .add-to-cart-btn {
+        margin-top: 1rem;
+        background-color: #1a1a1a;
+        color: #fff;
+        border: none;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: 0.3s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .add-to-cart-btn:hover {
+        background: #212031;
+      }
+
+      @media (max-width: 768px) {
+        .product-container {
+          flex-direction: column;
+        }
+      }
+    </style>
+
+<body>
+  <!-- header  -->
+  <header class="main-header">
+    <nav class="navbar">
+      <a href="index.html" class="nav-logo">VastraMahal</a>
+      <div class="navbar-links">
+        <ul class="nav-links">
+          <li class="nav-item">
+            <a href="index.html" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="shop.html" class="nav-link">Shop <i class="fa-solid fa-chevron-down fa-xs"></i></a>
+            <div class="mega-menu">
+              <div class="mega-menu-grid" id="megaMenu">
+                <div class="mega-menu-column">
+                  <h3>Men</h3>
+                  <ul>
+                    <li>
+                      <a href="shop.html?gender=Men&category=T-Shirts">T-Shirts & Polos</a>
+                    </li>
+                    <li>
+                      <a href="shop.html?gender=Men&category=Shirts">Shirts</a>
+                    </li>
+                    <li>
+                      <a href="shop.html?gender=Men&category=Jeans">Jeans & Trousers</a>
+                    </li>
+                    <li>
+                      <a href="shop.html?gender=Men&category=Footwear">Footwear</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="mega-menu-column">
+                  <h3>Women</h3>
+                  <ul>
+                    <li>
+                      <a href="shop.html?gender=Women&category=T-Shirts">T-Shirts</a>
+                    </li>
+                    <li>
+                      <a href="shop.html?gender=Women&category=Shirts">Shirts</a>
+                    </li>
+                    <li>
+                      <a href="shop.html?gender=Women&category=Footwear">Footwear
+                      </a>
+                    </li>
+                    <li>
+                      <a href="shop.html?gender=Women&category=Jeans">Jeans</a>
+                    </li>
+
+                    <li>
+                      <a href="shop.html?gender=Women&category=Boots">Boots</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="mega-menu-column">
+                  <h3>Accessories</h3>
+                  <ul>
+                    <li>
+                      <a href="shop.html?gender=Men&category=Accessories">Men's Accessories</a>
+                    </li>
+                    <li>
+                      <a href="shop.html?gender=Women&category=Accessories">Women's Accessories</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="mega-menu-promo">
+                  <img
+                    src="https://images.pexels.com/photos/1040424/pexels-photo-1040424.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                    alt="Seasonal Sale" />
+                  <div class="mega-menu-promo-content">
+                    <h4>End of Season Sale</h4>
+                    <p>Up to 50% off on selected items.</p>
+                    <a href="shop.html" class="promo-btn">Shop Now <i class="fa-solid fa-arrow-right fa-xs"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a href="about.html" class="nav-link">About</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">Contact</a>
+          </li>
+
+   
+
+          <li class="nav-item">
+            <form action="shop.html" method="GET">
+              <input type="text" id="searchInput" name="search" placeholder="Search..." />
+              <button class="btn" type="submit">Search</button>
+            </form>
+          </li>
+        </ul>
+        <div>
+          <ul class="mobile-links">
+            <li class="nav-item">
+              <button class="btn" id="loginBtn" onclick="openAuthModal()">
+                Login
+              </button>
+            </li>
+
+           <li class="nav-item">
+  <a href="cart.html" class="cart">
+    <span id="cartCountitems">0</span>
+    <i class="fa-solid fa-cart-plus"></i>
+  </a>
+</li>
+
+
+
+            <button class="dark-toggle" id="dark-toggle">🌙</button>
+            <button class="menu-btn" id="menu-btn">
+              <i class="fa-solid fa-bars"></i>
+            </button>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="mobile-menu" id="mobile-menu">
+    <div class="mobile-menu-header">
+      <a href="index.html" class="nav-logo">VastraMahal</a>
+      <button class="close-btn" id="close-btn">
+        <i class="fa-solid fa-times"></i>
+      </button>
+    </div>
+    <input type="text" class="mobile-search" placeholder="Search..." />
+    <ul class="mobile-nav-links">
+      <li class="mobile-nav-item">
+        <a href="index.html" class="mobile-nav-link">Home</a>
+      </li>
+      <li class="mobile-nav-item">
+        <a href="shop.html" class="mobile-nav-link" id="mobile-shop-link">
+          Shop
+          <i class="fa-solid fa-chevron-down fa-xs" id="shop-chevron"></i>
+        </a>
+        <div class="mobile-mega-menu" id="mobile-mega-menu">
+          <div class="mobile-mega-menu-column">
+            <h4>Men</h4>
+            <ul>
+              <li>
+                <a href="shop.html?gender=Men&category=T-Shirts">T-Shirts & Polos</a>
+              </li>
+              <li>
+                <a href="shop.html?gender=Men&category=Shirts">Shirts</a>
+              </li>
+              <li>
+                <a href="shop.html?gender=Men&category=Jeans">Jeans & Trousers</a>
+              </li>
+              <li>
+                <a href="shop.html?gender=Men&category=Footwear">Footwear</a>
+              </li>
+            </ul>
+          </div>
+          <div class="mobile-mega-menu-column">
+            <h4>Women</h4>
+            <ul>
+              <li>
+                <a href="shop.html?gender=Women&category=T-Shirts">T-Shirts</a>
+              </li>
+              <li>
+                <a href="shop.html?gender=Women&category=Shirts">Shirts</a>
+              </li>
+              <li>
+                <a href="shop.html?gender=Women&category=Footwear">Footwear
+                </a>
+              </li>
+              <li>
+                <a href="shop.html?gender=Women&category=Jeans">Jeans</a>
+              </li>
+
+              <li>
+                <a href="shop.html?gender=Women&category=Boots">Boots</a>
+              </li>
+            </ul>
+          </div>
+          <div class="mobile-mega-menu-column">
+            <h3>Accessories</h3>
+            <ul>
+              <li>
+                <a href="shop.html?gender=Men&category=Accessories">Men's Accessories</a>
+              </li>
+              <li>
+                <a href="shop.html?gender=Women&category=Accessories">Women's Accessories</a>
+              </li>
+            </ul>
+          </div>
+          <div class="mega-menu-promo">
+            <img
+              src="https://images.pexels.com/photos/1040424/pexels-photo-1040424.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              alt="Seasonal Sale" />
+            <div class="mega-menu-promo-content">
+              <h4>End of Season Sale</h4>
+              <p>Up to 50% off on selected items.</p>
+              <a href="shop.html" class="promo-btn">Shop Now <i class="fa-solid fa-arrow-right fa-xs"></i></a>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="mobile-nav-item">
+        <a href="#" class="mobile-nav-link">About</a>
+      </li>
+      <li class="mobile-nav-item">
+        <a href="#" class="mobile-nav-link">Contact</a>
+      </li>
+      <button class="mobile-nav-item">
+        <div class="dark-toggle" id="mobile-dark-toggle">🌙</div>
+      </button>
+    </ul>
+  </div>
+
+  <div id="productDetail" class="product-container"></div>
+  
+ <div class="carousel-container">
+    <h2>Related Products</h2>
+    <div class="product-carousel" id = "relatedCarousel"> </div>
+    
+    <div class="carousel-nav left" onclick="scrollCarousel(-220)">
+     <i class="fas fa-chevron-left"></i>
+    </div>
+
+    <div class="carousel-nav right" onclick="scrollCarousel(220)">
+      <i class="fas fa-chevron-right"></i>
+    </div>
+  </div>
+
+
+
+    <div class="menu_overlay" id="menu_overlay"></div>
+
+    <footer class="main-footer">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h4>VastraMahal</h4>
+          <p>
+            Your one-stop destination for the latest trends in fashion and
+            accessories. Quality and style delivered to your doorstep.
+          </p>
+          <div class="social-icons">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="shop.html?gender=Men">Men's Collection</a></li>
+            <li><a href="shop.html?gender=Women">Women's Fashion</a></li>
+            <li><a href="shop.html?category=Accessories">Accessories</a></li>
+            <li><a href="#">New Arrivals</a></li>
+            <li><a href="#">Sale & Offers</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Shipping & Returns</a></li>
+            <li><a href="#">Track Your Order</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Stay Updated</h4>
+          <p>Subscribe to our newsletter for the latest updates and offers.</p>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Your email address" required />
+            <button type="submit">Go</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 VastraMahal. All Rights Reserved.</p>
+        <div class="payment-icons">
+          <i class="fab fa-cc-visa"></i>
+          <i class="fab fa-cc-mastercard"></i>
+          <i class="fab fa-cc-paypal"></i>
+          <i class="fab fa-cc-amex"></i>
+        </div>
+      </div>
+    </footer>
+    <script src="products.js"></script>
+    <script src="product.js"></script>
+    <script src="navbar.js"></script>
+    <script src="constant.js"></script>
+
+
+    <script src="addToCart.js"></script>
+   
+
+    <script src="modal.js"></script>
+  
+    
+<script>
+  renderAuthModal();
+  const productDetailContainer = document.getElementById("productDetail");
+  const cartCountitems = document.getElementById("cartCountitems");
+
+    const cartLength=JSON.parse(localStorage.getItem("cart"));
+cartCountitems.textContent=cartLength.length;
+
+  const getQueryParam = (param) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+  };
+
+  const slug = getQueryParam("slug");
+
+  const product = products.find((p) => p.slug === slug);
+
+  const createThumbnails = (images) =>
+    images
+      .map(
+        (img, i) =>
+          `<img src="${img}" class="${i == 0 ? "active" : ""}" data-index="${i}" alt="thumb">`
+      )
+      .join("");
+
+  const renderProductDetail = (product) => {
+    if (!product) {
+      productDetailContainer.innerHTML = "<p>Product not found</p>";
+      return;
+    }
+
+    const colorsHtml = product.colors
+  .map(
+    (color, i) =>
+      `<div class="color-dot ${i == 0 ? "selected" : ""}" 
+      style="background:${color}" 
+      data-color="${color}"></div>`
+  )
+  .join("");
+
+    const sizesHtml = product.sizes
+      .map(
+        (size, i) =>
+          `<span class="size-option ${i == 0 ? "selected" : ""}" data-size="${size}">${size}</span>`
+      )
+      .join("");
+
+    productDetailContainer.innerHTML = `
+      <div class="image-gallery">
+        <div class="main-image">
+          <img id="mainImage" src="${product.images[0]}" alt="${product.name}" />
+        </div>
+
+        <div class="thumbnails">
+          ${createThumbnails(product.images)}
+        </div>
+      </div>
+
+      <div class="product-section">
+        <span class="brand">${product.brand}</span>
+
+        <h1 class="product-name">${product.name}</h1>
+
+        <div class="rating">
+          <i class="fa-solid fa-star"></i>
+          <span>${product.avgRating} (${product.numReviews} reviews)</span>
+        </div>
+
+        <div class="colors">
+          <p>Colors :</p>
+
+          <div class="color-selector">
+            ${colorsHtml}
+          </div>
+        </div>
+
+        <div class="sizes">
+          <p>Sizes :</p>
+
+          <div>
+            ${sizesHtml}
+          </div>
+        </div>
+
+        <p class="price">₹${product.price.toFixed(2)}</p>
+
+        <button class="add-to-cart-btn">
+          <i class="fa-solid fa-cart-plus"></i>
+          Add to Cart
+        </button>
+      </div>
+    `;
+
+    // AFTER RENDER
+    const mainImage = document.getElementById("mainImage");
+    const thumbnails = document.querySelectorAll(".thumbnails img");
+
+    thumbnails.forEach((thumb, i) => {
+      thumb.addEventListener("click", () => {
+
+        thumbnails.forEach((t) => t.classList.remove("active"));
+
+        thumb.classList.add("active");
+
+        mainImage.style.opacity = 0;
+
+        setTimeout(() => {
+          mainImage.src = product.images[i];
+          mainImage.style.opacity = 1;
+        }, 200);
+      });
+    });
+
+    // COLOR SELECT
+    document.querySelectorAll(".color-dot").forEach((dot) => {
+      dot.addEventListener("click", () => {
+
+        document
+          .querySelectorAll(".color-dot")
+          .forEach((d) => d.classList.remove("selected"));
+
+        dot.classList.add("selected");
+      });
+    });
+
+    // SIZE SELECT
+    document.querySelectorAll(".size-option").forEach((size) => {
+      size.addEventListener("click", () => {
+
+        document
+          .querySelectorAll(".size-option")
+          .forEach((s) => s.classList.remove("selected"));
+
+        size.classList.add("selected");
+      });
+    });
+document.addEventListener("click", (e) => {
+  if (e.target.closest(".add-to-cart-btn")) {
+    const selectedColor = document.querySelector(".color-dot.selected");
+    const selectedSize = document.querySelector(".size-option.selected");
+
+    const color = selectedColor?.dataset.color;
+    const size = selectedSize?.dataset.size;
+
+    addToCart({
+      ...product,
+      selectedColor: color,
+      selectedSize: size,
+    });
+  }
+});
+    
+
+  };
+
+
+
+   function renderProducts(filterTag) {
+    const carousel = document.getElementById("relatedCarousel");
+    let filterProducts = [];
+    if(!filterTag || filterTag === ""){
+      filterProducts = products;
+    } else {
+      filterProducts = products.filter((p) => p.tags.includes(filterTag));
+    }
+     if(filterProducts.length ===0){
+      carousel.innerHTML = `<p style='padding:20px; color:#555;'>No products found.</p>`;
+      return;
+     }
+
+  filterProducts.forEach((product) => {
+          const productCard = document.createElement("div");
+          productCard.className = "product-card";
+          let stars = "";
+          for (let i = 0; i < 5; i++) {
+            if (i < product.avgRating) {
+              stars += '<i class="fas fa-star"></i>';
+            } else {
+              stars += '<i class="far fa-star"></i>';
+            }
+          }
+          productCard.innerHTML = `${
+            product.discount
+              ? `<div class="discount-badge">${product.discount}% off</div>`
+              : ""
+          }
+      <div class="product-image-container"><img src="${
+        product.images[0]
+      }" alt="${product.name}" class="product-image">
+      </div>
+      <h3 class="product-title"><a href="product.html?slug=${
+        product.slug
+      }">${product.name.slice(0, 30)}...</a></h3>
+       <div class="product-rating">${stars}</div>
+       <div class="product-price">$${product.price.toFixed(2)}</div>
+      `;
+          carousel.appendChild(productCard);
+        });
+
+             
+        addToCartBtn.addEventListener("click", () => {
+          const selectedColor = document.querySelector(".color-dot.selected");
+          const selectedSize = document.querySelector(".size-option.selected");
+
+          if (!selectedColor || !selectedSize) {
+            alert("Please select color and size before adding to cart.");
+            return;
+          }
+
+          const color = selectedColor.dataset.color;
+          const size = selectedSize.dataset.size;
+
+          addToCart({
+            ...product,
+            selectedColor: color,
+            selectedSize: size,
+          });
+        });
+      };
+
+      
+ renderProductDetail(product);
+
+   //    men and women products
+   const container = document.getElementById("relatedCarousel");
+   const relatedProducts = 
+   products.filter(
+      (p) => p.category === product.category && p.slug !== product.slug
+    );
+  
+        function scrollCarousel(amount) {
+    container.scrollBy({
+      left: amount,
+      behavior: "smooth",
+    });
+  }
+   
+   function renderRelatedProducts() {
+        
+        container.innerHTML = "";
+
+        
+        relatedProducts.forEach((product) => {
+          const card = document.createElement("div");
+          card.className = "product-card";
+          let stars = "";
+          for (let i = 0; i < 5; i++) {
+            if (i < product.avgRating) {
+              stars += '<i class="fas fa-star"></i>';
+            } else {
+              stars += '<i class="far fa-star"></i>';
+            }
+          }
+          card.innerHTML = `${
+            product.discount
+              ? `<div class="discount-badge">${product.discount}% off</div>`
+              : ""
+          }
+      <div class="product-image-container"><img src="${
+        product.images[0]
+      }" alt="${product.name}" class="product-image">
+      </div>
+        <h3 class="product-title"><a href="product.html?slug=${
+          product.slug
+        }">${product.name.slice(0, 30)}...</a></h3>
+       <div class="product-rating">${stars}</div>
+       <div class="product-price">$${product.price.toFixed(2)}</div>
+      `;
+          container.appendChild(card);
+        });
+      }
+
+      
+     renderRelatedProducts();
+      
+  
+</script>
+</body>
+
+</html>
