@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <style>
-  
+
 
    /* =======================
    PRODUCT PAGE LAYOUT
@@ -558,14 +558,25 @@
   
     
 <script>
-  renderAuthModal();
+renderAuthModal();
 
 const productDetailContainer = document.getElementById("productDetail");
 const cartCountitems = document.getElementById("cartCountitems");
 
-/* ---------------- CART SAFE ---------------- */
-const getCart = () =>
-  JSON.parse(localStorage.getItem("cart")) || [];
+/* ---------------- SAFE CART ---------------- */
+function getCart() {
+  return JSON.parse(localStorage.getItem("cart")) || [];
+}
+
+function saveCart(cart) {
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+/* ---------------- UPDATE CART COUNT ---------------- */
+function updateCartCount() {
+  cartCountitems.textContent = getCart().length;
+}
+
 /* ---------------- GET SLUG ---------------- */
 const getQueryParam = (param) => {
   const urlParams = new URLSearchParams(window.location.search);
@@ -574,7 +585,7 @@ const getQueryParam = (param) => {
 
 const slug = getQueryParam("slug");
 
-/* ---------------- PRODUCT FIND ---------------- */
+/* ---------------- FIND PRODUCT ---------------- */
 const product = products.find((p) => p.slug === slug);
 
 /* ---------------- THUMBNAILS ---------------- */
@@ -582,12 +593,12 @@ const createThumbnails = (images) =>
   images
     .map(
       (img, i) =>
-        `<img src="${img}" class="${i == 0 ? "active" : ""}" data-index="${i}" alt="thumb">`
+        `<img src="${img}" class="${i === 0 ? "active" : ""}" data-index="${i}">`
     )
     .join("");
 
 /* ---------------- RENDER PRODUCT ---------------- */
-const renderProductDetail = (product) => {
+function renderProductDetail(product) {
   if (!product) {
     productDetailContainer.innerHTML = "<p>Product not found</p>";
     return;
@@ -596,7 +607,7 @@ const renderProductDetail = (product) => {
   const colorsHtml = product.colors
     .map(
       (color, i) =>
-        `<div class="color-dot ${i == 0 ? "selected" : ""}" 
+        `<div class="color-dot ${i === 0 ? "selected" : ""}" 
         style="background:${color}" 
         data-color="${color}"></div>`
     )
@@ -605,14 +616,15 @@ const renderProductDetail = (product) => {
   const sizesHtml = product.sizes
     .map(
       (size, i) =>
-        `<span class="size-option ${i == 0 ? "selected" : ""}" data-size="${size}">${size}</span>`
+        `<span class="size-option ${i === 0 ? "selected" : ""}" 
+        data-size="${size}">${size}</span>`
     )
     .join("");
 
   productDetailContainer.innerHTML = `
     <div class="image-gallery">
       <div class="main-image">
-        <img id="mainImage" src="${product.images[0]}" alt="${product.name}" />
+        <img id="mainImage" src="${product.images[0]}" />
       </div>
 
       <div class="thumbnails">
@@ -622,21 +634,20 @@ const renderProductDetail = (product) => {
 
     <div class="product-section">
       <span class="brand">${product.brand}</span>
-
       <h1 class="product-name">${product.name}</h1>
 
       <div class="rating">
         <i class="fa-solid fa-star"></i>
-        <span>${product.avgRating} (${product.numReviews} reviews)</span>
+        <span>${product.avgRating} (${product.numReviews})</span>
       </div>
 
       <div class="colors">
-        <p>Colors :</p>
+        <p>Colors</p>
         <div class="color-selector">${colorsHtml}</div>
       </div>
 
       <div class="sizes">
-        <p>Sizes :</p>
+        <p>Sizes</p>
         <div>${sizesHtml}</div>
       </div>
 
@@ -651,15 +662,14 @@ const renderProductDetail = (product) => {
 
   /* ---------------- IMAGE SWITCH ---------------- */
   const mainImage = document.getElementById("mainImage");
-  const thumbnails = document.querySelectorAll(".thumbnails img");
-
-  thumbnails.forEach((thumb, i) => {
+  document.querySelectorAll(".thumbnails img").forEach((thumb, i) => {
     thumb.addEventListener("click", () => {
-      thumbnails.forEach((t) => t.classList.remove("active"));
+      document.querySelectorAll(".thumbnails img")
+        .forEach(t => t.classList.remove("active"));
+
       thumb.classList.add("active");
 
       mainImage.style.opacity = 0;
-
       setTimeout(() => {
         mainImage.src = product.images[i];
         mainImage.style.opacity = 1;
@@ -670,9 +680,9 @@ const renderProductDetail = (product) => {
   /* ---------------- COLOR SELECT ---------------- */
   document.querySelectorAll(".color-dot").forEach((dot) => {
     dot.addEventListener("click", () => {
-      document
-        .querySelectorAll(".color-dot")
-        .forEach((d) => d.classList.remove("selected"));
+      document.querySelectorAll(".color-dot")
+        .forEach(d => d.classList.remove("selected"));
+
       dot.classList.add("selected");
     });
   });
@@ -680,27 +690,35 @@ const renderProductDetail = (product) => {
   /* ---------------- SIZE SELECT ---------------- */
   document.querySelectorAll(".size-option").forEach((size) => {
     size.addEventListener("click", () => {
-      document
-        .querySelectorAll(".size-option")
-        .forEach((s) => s.classList.remove("selected"));
+      document.querySelectorAll(".size-option")
+        .forEach(s => s.classList.remove("selected"));
+
       size.classList.add("selected");
     });
   });
 
-  /* ---------------- ADD TO CART (SAFE SINGLE HANDLER) ---------------- */
-  document.addEventListener("click", (e) => {
-    if (e.target.closest(".add-to-cart-btn")) {
+  /* ---------------- ADD TO CART ---------------- */
+  document.querySelector(".add-to-cart-btn")
+    .addEventListener("click", () => {
+
       const selectedColor = document.querySelector(".color-dot.selected");
       const selectedSize = document.querySelector(".size-option.selected");
 
-      addToCart({
+      const cart = getCart();
+
+      cart.push({
         ...product,
-        selectedColor: selectedColor?.dataset.color,
-        selectedSize: selectedSize?.dataset.size,
+        selectedColor: selectedColor?.dataset.color || null,
+        selectedSize: selectedSize?.dataset.size || null,
+        qty: 1
       });
-    }
-  });
-};
+
+      saveCart(cart);
+      updateCartCount();
+
+      alert("Product added to cart!");
+    });
+}
 
 /* ---------------- RELATED PRODUCTS ---------------- */
 const container = document.getElementById("relatedCarousel");
@@ -710,38 +728,36 @@ const relatedProducts = products.filter(
 );
 
 function scrollCarousel(amount) {
-  container.scrollBy({
-    left: amount,
-    behavior: "smooth",
-  });
+  container.scrollBy({ left: amount, behavior: "smooth" });
 }
 
 function renderRelatedProducts() {
   container.innerHTML = "";
 
-  relatedProducts.forEach((product) => {
+  relatedProducts.forEach((p) => {
     const card = document.createElement("div");
     card.className = "product-card";
 
     let stars = "";
     for (let i = 0; i < 5; i++) {
-      stars += i < product.avgRating
+      stars += i < p.avgRating
         ? '<i class="fas fa-star"></i>'
         : '<i class="far fa-star"></i>';
     }
 
     card.innerHTML = `
-      ${product.discount ? `<div class="discount-badge">${product.discount}% off</div>` : ""}
       <div class="product-image-container">
-        <img src="${product.images[0]}" class="product-image">
+        <img src="${p.images[0]}" />
       </div>
+
       <h3 class="product-title">
-        <a href="product.html?slug=${product.slug}">
-          ${product.name.slice(0, 30)}...
+        <a href="product.html?slug=${p.slug}">
+          ${p.name.slice(0, 25)}...
         </a>
       </h3>
+
       <div class="product-rating">${stars}</div>
-      <div class="product-price">₹${product.price.toFixed(2)}</div>
+      <div class="product-price">₹${p.price.toFixed(2)}</div>
     `;
 
     container.appendChild(card);
@@ -751,8 +767,8 @@ function renderRelatedProducts() {
 /* ---------------- INIT ---------------- */
 renderProductDetail(product);
 renderRelatedProducts();
-      
-  
+updateCartCount();
+
 </script>
 </body>
 
