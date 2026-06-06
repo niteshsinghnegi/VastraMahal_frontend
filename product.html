@@ -10,10 +10,24 @@
 </head>
 <style>
 
-/* =======================
-   PRODUCT PAGE LAYOUT
-======================= */
+/* =========================
+   GLOBAL RESET
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
+body {
+  font-family: Arial, sans-serif;
+  background: #f7f7f7;
+  color: #111;
+}
+
+/* =========================
+   PRODUCT PAGE LAYOUT
+========================= */
 .product-container {
   max-width: 1200px;
   margin: 2rem auto;
@@ -21,241 +35,203 @@
   flex-wrap: wrap;
   gap: 2rem;
   padding: 1rem;
+  background: #fff;
+  border-radius: 12px;
 }
 
-/* =======================
+/* =========================
    IMAGE SECTION
-======================= */
-
+========================= */
 .image-gallery {
-  flex: 1 1 500px;
-  width: 100%;
-  background: var(--bg-color);
+  flex: 1 1 450px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 }
 
 .main-image img {
   width: 100%;
-  border-radius: 1rem;
   max-height: 500px;
-  object-fit: cover;
-  transition: opacity 0.3s ease;
+  object-fit: contain;
+  border-radius: 12px;
+  background: #fff;
+  padding: 10px;
 }
 
 .thumbnails {
   display: flex;
-  gap: 0.5rem;
-  margin-top: 10px;
+  gap: 10px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .thumbnails img {
+  width: 70px;
   height: 70px;
-  border-radius: 0.5rem;
-  padding: 5px;
   object-fit: cover;
+  border-radius: 8px;
   cursor: pointer;
   border: 2px solid transparent;
-  transition: transform 0.2s;
+  transition: 0.3s;
 }
 
 .thumbnails img.active {
-  border-color: #333;
+  border-color: #000;
   transform: scale(1.05);
 }
 
-/* =======================
-   PRODUCT INFO SECTION
-======================= */
-
+/* =========================
+   PRODUCT INFO
+========================= */
 .product-section {
-  flex: 1 1 500px;
+  flex: 1 1 450px;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 12px;
 }
 
 .brand {
-  font-size: 1rem;
-  color: #6b7280;
+  color: #777;
+  font-size: 14px;
 }
 
 .product-name {
-  font-size: 2rem;
-  font-weight: bold;
-}
-
-.product-name:hover {
-  color: var(--text-color);
-}
-
-.rating {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-  font-size: 0.9rem;
-  color: #f59e0b;
-}
-
-/* =======================
-   COLORS & SIZES
-======================= */
-
-.colors,
-.sizes {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
-
-.color-selector {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.color-dot {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  cursor: pointer;
-  border: 2px solid transparent;
-}
-
-.color-dot.selected {
-  border-color: #6366f1;
-  transform: scale(1.1);
-}
-
-.size-option {
-  display: inline-block;
-  margin-top: 0.3rem;
-  padding: 0.3rem 1rem;
-  border: 1px solid #ccc;
-  border-radius: 0.3rem;
-  cursor: pointer;
-  margin-right: 0.5rem;
-}
-
-.size-option.selected {
-  background-color: #1a1a1a;
-  color: #fff;
+  font-size: 24px;
   font-weight: 600;
 }
 
-/* =======================
-   PRICE & BUTTON
-======================= */
+.rating {
+  color: #f59e0b;
+  font-size: 14px;
+}
 
 .price {
-  font-size: 1.5rem;
+  font-size: 22px;
   font-weight: bold;
 }
 
+/* =========================
+   ADD TO CART BUTTON
+========================= */
 .add-to-cart-btn {
-  margin-top: 1rem;
-  background-color: #1a1a1a;
-  color: #fff;
+  margin-top: 15px;
+  padding: 12px;
   border: none;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  font-size: 1rem;
+  background: #111;
+  color: #fff;
+  border-radius: 8px;
   cursor: pointer;
+  font-size: 16px;
   transition: 0.3s;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .add-to-cart-btn:hover {
-  background: #212031;
+  background: #333;
 }
 
-/* =======================
-   RELATED PRODUCTS CAROUSEL (IMPORTANT FIX)
-======================= */
-
+/* =========================
+   RELATED PRODUCTS SECTION
+========================= */
 .carousel-container {
   max-width: 1200px;
   margin: 3rem auto;
   padding: 1rem;
-  position: relative;
+}
+
+.carousel-container h2 {
+  margin-bottom: 15px;
 }
 
 .product-carousel {
   display: flex;
-  gap: 1rem;
+  gap: 15px;
   overflow-x: auto;
+  padding: 10px;
   scroll-behavior: smooth;
-  padding: 1rem;
-  scrollbar-width: none;
 }
 
+/* hide scrollbar */
 .product-carousel::-webkit-scrollbar {
   display: none;
 }
 
+/* =========================
+   PRODUCT CARD (FIX MAIN ISSUE)
+========================= */
 .product-card {
-  min-width: 220px;
-  flex: 0 0 auto;
+  flex: 0 0 200px;
   background: #fff;
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 10px;
   text-align: center;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  transition: 0.3s;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+.product-image-container {
+  width: 100%;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .product-image-container img {
   width: 100%;
-  border-radius: 10px;
-  object-fit: cover;
+  height: 100%;
+  object-fit: contain;
 }
 
 .product-title {
   font-size: 14px;
   margin: 10px 0;
+  height: 40px;
+  overflow: hidden;
 }
 
 .product-price {
   font-weight: bold;
 }
 
-/* =======================
+/* =========================
    NAV BUTTONS
-======================= */
-
+========================= */
 .carousel-nav {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   background: #000;
   color: #fff;
+  border: none;
   padding: 10px;
   border-radius: 50%;
   cursor: pointer;
-  z-index: 10;
 }
 
 .carousel-nav.left {
-  left: 0;
+  left: 10px;
 }
 
 .carousel-nav.right {
-  right: 0;
+  right: 10px;
 }
 
-/* =======================
+/* =========================
    MOBILE RESPONSIVE
-======================= */
-
+========================= */
 @media (max-width: 768px) {
   .product-container {
     flex-direction: column;
   }
 
   .product-card {
-    min-width: 180px;
+    flex: 0 0 160px;
   }
 }
 </style>
