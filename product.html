@@ -562,13 +562,17 @@ renderAuthModal();
 const productDetailContainer = document.getElementById("productDetail");
 const cartCountitems = document.getElementById("cartCountitems");
 
-/* ---------------- CART SAFE (NO DUPLICATE ERROR) ---------------- */
+/* ---------------- SAFE CART SYSTEM ---------------- */
 function getCart() {
   return JSON.parse(localStorage.getItem("cart")) || [];
 }
 
 function saveCart(cart) {
   localStorage.setItem("cart", JSON.stringify(cart));
+  updateCartUI(cart);
+}
+
+function updateCartUI(cart = getCart()) {
   cartCountitems.textContent = cart.length;
 }
 
@@ -576,7 +580,12 @@ function addToCart(product) {
   const cart = getCart();
 
   cart.push({
-    ...product,
+    id: product.id || product.slug,
+    name: product.name,
+    price: product.price,
+    images: product.images,
+    selectedColor: product.selectedColor || null,
+    selectedSize: product.selectedSize || null,
     qty: 1
   });
 
@@ -585,7 +594,7 @@ function addToCart(product) {
 }
 
 /* ---------------- INIT CART COUNT ---------------- */
-cartCountitems.textContent = getCart().length;
+updateCartUI();
 
 /* ---------------- GET SLUG ---------------- */
 const slug = new URLSearchParams(window.location.search).get("slug");
@@ -594,7 +603,7 @@ const slug = new URLSearchParams(window.location.search).get("slug");
 const product = products.find(p => p.slug === slug);
 
 /* ---------------- THUMBNAILS ---------------- */
-const createThumbnails = (images) =>
+const createThumbnails = (images = []) =>
   images.map((img, i) =>
     `<img src="${img}" class="${i === 0 ? "active" : ""}" data-index="${i}">`
   ).join("");
@@ -609,7 +618,7 @@ function renderProductDetail(product) {
   productDetailContainer.innerHTML = `
     <div class="image-gallery">
       <div class="main-image">
-        <img id="mainImage" src="${product.images[0]}" />
+        <img id="mainImage" src="${product.images?.[0] || ''}" />
       </div>
 
       <div class="thumbnails">
@@ -618,12 +627,12 @@ function renderProductDetail(product) {
     </div>
 
     <div class="product-section">
-      <span class="brand">${product.brand}</span>
+      <span class="brand">${product.brand || ''}</span>
       <h1 class="product-name">${product.name}</h1>
 
       <div class="rating">
         <i class="fa-solid fa-star"></i>
-        <span>${product.avgRating} (${product.numReviews})</span>
+        <span>${product.avgRating || 0} (${product.numReviews || 0})</span>
       </div>
 
       <div class="price">₹${product.price.toFixed(2)}</div>
@@ -646,6 +655,7 @@ function renderProductDetail(product) {
       thumb.classList.add("active");
 
       mainImage.style.opacity = 0;
+
       setTimeout(() => {
         mainImage.src = product.images[i];
         mainImage.style.opacity = 1;
@@ -653,11 +663,14 @@ function renderProductDetail(product) {
     });
   });
 
-  /* ADD TO CART (SAFE - NO MULTIPLE LISTENER ISSUE) */
-  document.querySelector(".add-to-cart-btn")
-    .addEventListener("click", () => {
+  /* ADD TO CART (SAFE SINGLE HANDLER) */
+  const btn = document.querySelector(".add-to-cart-btn");
+
+  if (btn) {
+    btn.addEventListener("click", () => {
       addToCart(product);
     });
+  }
 }
 
 /* ---------------- RELATED PRODUCTS ---------------- */
@@ -680,7 +693,7 @@ function renderRelatedProducts() {
 
     card.innerHTML = `
       <div class="product-image-container">
-        <img src="${p.images[0]}" />
+        <img src="${p.images?.[0] || ''}" />
       </div>
 
       <h3 class="product-title">
@@ -700,7 +713,6 @@ function renderRelatedProducts() {
 renderProductDetail(product);
 renderRelatedProducts();
   </script>
-
 
 </body>
 
