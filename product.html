@@ -9,11 +9,25 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <style>
+/* =========================
+   GLOBAL RESET
+========================= */
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-   /* =======================
+body {
+  font-family: Arial, sans-serif;
+  background: #f8f8f8;
+  color: #111;
+}
+
+/* =========================
    PRODUCT PAGE LAYOUT
-======================= */
+========================= */
 
 .product-container {
   max-width: 1200px;
@@ -24,158 +38,146 @@
   padding: 1rem;
 }
 
-/* =======================
+/* =========================
    IMAGE SECTION
-======================= */
+========================= */
 
 .image-gallery {
   flex: 1 1 500px;
-  width: 100%;
-  background: var(--bg-color);
+  background: #fff;
+  padding: 1rem;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 }
 
 .main-image img {
   width: 100%;
-  border-radius: 1rem;
   max-height: 500px;
   object-fit: cover;
-  transition: opacity 0.3s ease;
+  border-radius: 10px;
+  transition: 0.3s ease;
 }
 
 .thumbnails {
   display: flex;
-  gap: 0.5rem;
+  gap: 10px;
   margin-top: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .thumbnails img {
+  width: 70px;
   height: 70px;
-  border-radius: 0.5rem;
-  padding: 5px;
   object-fit: cover;
+  border-radius: 8px;
   cursor: pointer;
   border: 2px solid transparent;
-  transition: transform 0.2s;
+  transition: 0.2s;
 }
 
 .thumbnails img.active {
-  border-color: #333;
+  border-color: #000;
   transform: scale(1.05);
 }
 
-/* =======================
-   PRODUCT INFO SECTION
-======================= */
+/* =========================
+   PRODUCT INFO
+========================= */
 
 .product-section {
   flex: 1 1 500px;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
 .brand {
-  font-size: 1rem;
-  color: #6b7280;
+  font-size: 14px;
+  color: gray;
 }
 
 .product-name {
-  font-size: 2rem;
+  font-size: 24px;
   font-weight: bold;
 }
 
-.product-name:hover {
-  color: var(--text-color);
-}
-
 .rating {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-  font-size: 0.9rem;
   color: #f59e0b;
+  font-size: 14px;
 }
 
-/* =======================
-   COLORS & SIZES
-======================= */
-
-.colors,
-.sizes {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
+/* =========================
+   COLORS
+========================= */
 
 .color-selector {
   display: flex;
-  gap: 0.5rem;
+  gap: 10px;
 }
 
 .color-dot {
-  width: 24px;
-  height: 24px;
+  width: 25px;
+  height: 25px;
   border-radius: 50%;
   cursor: pointer;
   border: 2px solid transparent;
 }
 
 .color-dot.selected {
-  border-color: #6366f1;
-  transform: scale(1.1);
+  border-color: #000;
 }
+
+/* =========================
+   SIZES
+========================= */
 
 .size-option {
   display: inline-block;
-  margin-top: 0.3rem;
-  padding: 0.3rem 1rem;
+  padding: 6px 12px;
   border: 1px solid #ccc;
-  border-radius: 0.3rem;
+  margin: 5px;
   cursor: pointer;
-  margin-right: 0.5rem;
+  border-radius: 5px;
 }
 
 .size-option.selected {
-  background-color: #1a1a1a;
+  background: #000;
   color: #fff;
-  font-weight: 600;
 }
 
-/* =======================
+/* =========================
    PRICE & BUTTON
-======================= */
+========================= */
 
 .price {
-  font-size: 1.5rem;
+  font-size: 20px;
   font-weight: bold;
 }
 
 .add-to-cart-btn {
-  margin-top: 1rem;
-  background-color: #1a1a1a;
+  background: #000;
   color: #fff;
+  padding: 12px;
   border: none;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  font-size: 1rem;
+  border-radius: 6px;
   cursor: pointer;
+  font-size: 16px;
   transition: 0.3s;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .add-to-cart-btn:hover {
-  background: #212031;
+  background: #222;
 }
 
-/* =======================
-   RELATED PRODUCTS CAROUSEL (IMPORTANT FIX)
-======================= */
+/* =========================
+   RELATED PRODUCTS CAROUSEL (FIXED)
+========================= */
 
 .carousel-container {
   max-width: 1200px;
@@ -190,6 +192,8 @@
   overflow-x: auto;
   scroll-behavior: smooth;
   padding: 1rem;
+
+  flex-wrap: nowrap;
   scrollbar-width: none;
 }
 
@@ -197,35 +201,39 @@
   display: none;
 }
 
+/* PRODUCT CARD FIX (MAIN FIX) */
 .product-card {
-  min-width: 220px;
-  flex: 0 0 auto;
+  flex: 0 0 200px;
+  width: 200px;
   background: #fff;
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 10px;
   text-align: center;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.product-image-container img {
+.product-card img {
   width: 100%;
-  border-radius: 10px;
+  height: 180px;
   object-fit: cover;
+  border-radius: 10px;
 }
 
 .product-title {
-  font-size: 14px;
-  margin: 10px 0;
+  font-size: 13px;
+  font-weight: 500;
 }
 
 .product-price {
   font-weight: bold;
+  font-size: 14px;
 }
 
-/* =======================
-   NAV BUTTONS
-======================= */
-
+/* NAV BUTTONS */
 .carousel-nav {
   position: absolute;
   top: 50%;
@@ -235,7 +243,6 @@
   padding: 10px;
   border-radius: 50%;
   cursor: pointer;
-  z-index: 10;
 }
 
 .carousel-nav.left {
@@ -246,9 +253,9 @@
   right: 0;
 }
 
-/* =======================
-   MOBILE RESPONSIVE
-======================= */
+/* =========================
+   RESPONSIVE
+========================= */
 
 @media (max-width: 768px) {
   .product-container {
@@ -256,9 +263,15 @@
   }
 
   .product-card {
-    min-width: 180px;
+    flex: 0 0 160px;
+    width: 160px;
+  }
+
+  .product-card img {
+    height: 140px;
   }
 }
+
 </style>
 <body>
   <!-- header  -->
