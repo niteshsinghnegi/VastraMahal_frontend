@@ -462,9 +462,8 @@
   const productDetailContainer = document.getElementById("productDetail");
   const cartCountitems = document.getElementById("cartCountitems");
 
-    const cartLength=JSON.parse(localStorage.getItem("cart"));
-cartCountitems.textContent=cartLength.length;
-
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+cartCountitems.textContent = cart.length;
   const getQueryParam = (param) => {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
