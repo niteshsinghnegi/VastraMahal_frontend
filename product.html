@@ -9,9 +9,176 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <style>
-/* =======================
-   RELATED PRODUCTS FIX (CLEAN VERSION)
-======================= */
+
+/* =========================
+   GLOBAL RESET
+========================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f8f8f8;
+  color: #111;
+}
+
+/* =========================
+   PRODUCT PAGE LAYOUT
+========================= */
+
+.product-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 1rem;
+}
+
+/* =========================
+   IMAGE SECTION
+========================= */
+
+.image-gallery {
+  flex: 1 1 500px;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main-image img {
+  width: 100%;
+  max-height: 500px;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: 0.3s ease;
+}
+
+.thumbnails {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.thumbnails img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: 0.2s;
+}
+
+.thumbnails img.active {
+  border-color: #000;
+  transform: scale(1.05);
+}
+
+/* =========================
+   PRODUCT INFO
+========================= */
+
+.product-section {
+  flex: 1 1 500px;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.brand {
+  font-size: 14px;
+  color: gray;
+}
+
+.product-name {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.rating {
+  color: #f59e0b;
+  font-size: 14px;
+}
+
+/* =========================
+   COLORS
+========================= */
+
+.color-selector {
+  display: flex;
+  gap: 10px;
+}
+
+.color-dot {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.color-dot.selected {
+  border-color: #000;
+}
+
+/* =========================
+   SIZES
+========================= */
+
+.size-option {
+  display: inline-block;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.size-option.selected {
+  background: #000;
+  color: #fff;
+}
+
+/* =========================
+   PRICE & BUTTON
+========================= */
+
+.price {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.add-to-cart-btn {
+  background: #000;
+  color: #fff;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.add-to-cart-btn:hover {
+  background: #222;
+}
+
+/* =========================
+   RELATED PRODUCTS CAROUSEL (FIXED)
+========================= */
 
 .carousel-container {
   max-width: 1200px;
@@ -20,64 +187,51 @@
   position: relative;
 }
 
-/* SCROLL ROW */
 .product-carousel {
   display: flex;
-  gap: 16px;
+  gap: 1rem;
   overflow-x: auto;
   scroll-behavior: smooth;
-  padding: 10px 5px;
+  padding: 1rem;
 
-  /* IMPORTANT FIX */
   flex-wrap: nowrap;
-  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
 
-/* HIDE SCROLLBAR */
 .product-carousel::-webkit-scrollbar {
   display: none;
 }
 
-/* CARD */
+/* PRODUCT CARD FIX (MAIN FIX) */
 .product-card {
-  flex: 0 0 auto;
+  flex: 0 0 200px;
   width: 200px;
   background: #fff;
   border-radius: 12px;
   padding: 10px;
   text-align: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
 
-  /* IMPORTANT FIX */
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-/* IMAGE */
-.product-image-container {
+.product-card img {
   width: 100%;
-  height: 170px;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.product-image-container img {
-  width: 100%;
-  height: 100%;
+  height: 180px;
   object-fit: cover;
+  border-radius: 10px;
 }
 
-/* TITLE FIX */
 .product-title {
-  font-size: 14px;
-  margin: 8px 0;
-  white-space: normal;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-size: 13px;
+  font-weight: 500;
 }
 
-/* PRICE */
 .product-price {
   font-weight: bold;
+  font-size: 14px;
 }
 
 /* NAV BUTTONS */
@@ -87,31 +241,37 @@
   transform: translateY(-50%);
   background: #000;
   color: #fff;
-  padding: 8px;
+  padding: 10px;
   border-radius: 50%;
   cursor: pointer;
-  z-index: 10;
 }
 
 .carousel-nav.left {
-  left: 5px;
+  left: 0;
 }
 
 .carousel-nav.right {
-  right: 5px;
+  right: 0;
 }
 
-/* MOBILE FIX */
+/* =========================
+   RESPONSIVE
+========================= */
+
 @media (max-width: 768px) {
+  .product-container {
+    flex-direction: column;
+  }
+
   .product-card {
+    flex: 0 0 160px;
     width: 160px;
   }
 
-  .product-image-container {
+  .product-card img {
     height: 140px;
   }
 }
-
 </style>
 <body>
   <!-- header  -->
