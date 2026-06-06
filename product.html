@@ -546,12 +546,12 @@
       </div>
     </footer>
     <script src="products.js"></script>
-    <script src="product.js"></script>
+    <!-- <script src="product.js"></script> -->
     <script src="navbar.js"></script>
     <script src="constant.js"></script>
 
-
-    <script src="addToCart.js"></script>
+<!-- 
+    <script src="addToCart.js"></script> -->
    
 
     <script src="modal.js"></script>
@@ -560,10 +560,7 @@
 <script>
 renderAuthModal();
 
-const productDetailContainer = document.getElementById("productDetail");
-const cartCountitems = document.getElementById("cartCountitems");
-
-/* ---------------- SAFE CART ---------------- */
+/* ================= CART SYSTEM ================= */
 function getCart() {
   return JSON.parse(localStorage.getItem("cart")) || [];
 }
@@ -572,201 +569,136 @@ function saveCart(cart) {
   localStorage.setItem("cart", JSON.stringify(cart));
 }
 
-/* ---------------- UPDATE CART COUNT ---------------- */
 function updateCartCount() {
+  const cartCountitems = document.getElementById("cartCountitems");
   cartCountitems.textContent = getCart().length;
 }
 
-/* ---------------- GET SLUG ---------------- */
-const getQueryParam = (param) => {
+/* ================= URL PARAM ================= */
+function getQueryParam(param) {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get(param);
-};
+}
 
 const slug = getQueryParam("slug");
 
-/* ---------------- FIND PRODUCT ---------------- */
-const product = products.find((p) => p.slug === slug);
+/* ================= PRODUCT FIND ================= */
+const product = products.find(p => p.slug === slug);
 
-/* ---------------- THUMBNAILS ---------------- */
-const createThumbnails = (images) =>
-  images
-    .map(
-      (img, i) =>
-        `<img src="${img}" class="${i === 0 ? "active" : ""}" data-index="${i}">`
-    )
-    .join("");
+/* ================= RENDER PRODUCT ================= */
+const container = document.getElementById("productDetail");
 
-/* ---------------- RENDER PRODUCT ---------------- */
-function renderProductDetail(product) {
+function renderProduct() {
   if (!product) {
-    productDetailContainer.innerHTML = "<p>Product not found</p>";
+    container.innerHTML = "<h2>Product not found</h2>";
     return;
   }
 
-  const colorsHtml = product.colors
-    .map(
-      (color, i) =>
-        `<div class="color-dot ${i === 0 ? "selected" : ""}" 
-        style="background:${color}" 
-        data-color="${color}"></div>`
-    )
-    .join("");
+  const colors = product.colors.map((c, i) =>
+    `<div class="color-dot ${i === 0 ? "selected" : ""}" 
+    style="background:${c}" data-color="${c}"></div>`
+  ).join("");
 
-  const sizesHtml = product.sizes
-    .map(
-      (size, i) =>
-        `<span class="size-option ${i === 0 ? "selected" : ""}" 
-        data-size="${size}">${size}</span>`
-    )
-    .join("");
+  const sizes = product.sizes.map((s, i) =>
+    `<span class="size-option ${i === 0 ? "selected" : ""}" data-size="${s}">${s}</span>`
+  ).join("");
 
-  productDetailContainer.innerHTML = `
+  container.innerHTML = `
     <div class="image-gallery">
       <div class="main-image">
-        <img id="mainImage" src="${product.images[0]}" />
+        <img id="mainImage" src="${product.images[0]}">
       </div>
-
       <div class="thumbnails">
-        ${createThumbnails(product.images)}
+        ${product.images.map((img, i) =>
+          `<img src="${img}" class="${i === 0 ? "active" : ""}" data-i="${i}">`
+        ).join("")}
       </div>
     </div>
 
     <div class="product-section">
-      <span class="brand">${product.brand}</span>
-      <h1 class="product-name">${product.name}</h1>
+      <h2>${product.name}</h2>
+      <p>₹${product.price}</p>
 
-      <div class="rating">
-        <i class="fa-solid fa-star"></i>
-        <span>${product.avgRating} (${product.numReviews})</span>
-      </div>
+      <div class="colors">${colors}</div>
+      <div class="sizes">${sizes}</div>
 
-      <div class="colors">
-        <p>Colors</p>
-        <div class="color-selector">${colorsHtml}</div>
-      </div>
-
-      <div class="sizes">
-        <p>Sizes</p>
-        <div>${sizesHtml}</div>
-      </div>
-
-      <p class="price">₹${product.price.toFixed(2)}</p>
-
-      <button class="add-to-cart-btn">
-        <i class="fa-solid fa-cart-plus"></i>
-        Add to Cart
-      </button>
+      <button class="add-to-cart-btn">Add to Cart</button>
     </div>
   `;
 
-  /* ---------------- IMAGE SWITCH ---------------- */
-  const mainImage = document.getElementById("mainImage");
-  document.querySelectorAll(".thumbnails img").forEach((thumb, i) => {
-    thumb.addEventListener("click", () => {
-      document.querySelectorAll(".thumbnails img")
-        .forEach(t => t.classList.remove("active"));
-
-      thumb.classList.add("active");
-
-      mainImage.style.opacity = 0;
-      setTimeout(() => {
-        mainImage.src = product.images[i];
-        mainImage.style.opacity = 1;
-      }, 200);
-    });
+  /* IMAGE SWITCH */
+  document.querySelectorAll(".thumbnails img").forEach((img, i) => {
+    img.onclick = () => {
+      document.getElementById("mainImage").src = product.images[i];
+    };
   });
 
-  /* ---------------- COLOR SELECT ---------------- */
-  document.querySelectorAll(".color-dot").forEach((dot) => {
-    dot.addEventListener("click", () => {
-      document.querySelectorAll(".color-dot")
-        .forEach(d => d.classList.remove("selected"));
-
-      dot.classList.add("selected");
-    });
+  /* COLOR SELECT */
+  document.querySelectorAll(".color-dot").forEach(el => {
+    el.onclick = () => {
+      document.querySelectorAll(".color-dot").forEach(e => e.classList.remove("selected"));
+      el.classList.add("selected");
+    };
   });
 
-  /* ---------------- SIZE SELECT ---------------- */
-  document.querySelectorAll(".size-option").forEach((size) => {
-    size.addEventListener("click", () => {
-      document.querySelectorAll(".size-option")
-        .forEach(s => s.classList.remove("selected"));
-
-      size.classList.add("selected");
-    });
+  /* SIZE SELECT */
+  document.querySelectorAll(".size-option").forEach(el => {
+    el.onclick = () => {
+      document.querySelectorAll(".size-option").forEach(e => e.classList.remove("selected"));
+      el.classList.add("selected");
+    };
   });
 
-  /* ---------------- ADD TO CART ---------------- */
-  document.querySelector(".add-to-cart-btn")
-    .addEventListener("click", () => {
+  /* ADD TO CART */
+  document.querySelector(".add-to-cart-btn").onclick = () => {
 
-      const selectedColor = document.querySelector(".color-dot.selected");
-      const selectedSize = document.querySelector(".size-option.selected");
+    const selectedColor = document.querySelector(".color-dot.selected")?.dataset.color;
+    const selectedSize = document.querySelector(".size-option.selected")?.dataset.size;
 
-      const cart = getCart();
+    let cart = getCart();
 
-      cart.push({
-        ...product,
-        selectedColor: selectedColor?.dataset.color || null,
-        selectedSize: selectedSize?.dataset.size || null,
-        qty: 1
-      });
-
-      saveCart(cart);
-      updateCartCount();
-
-      alert("Product added to cart!");
+    cart.push({
+      ...product,
+      selectedColor,
+      selectedSize,
+      qty: 1
     });
+
+    saveCart(cart);
+    updateCartCount();
+
+    alert("Added to cart!");
+  };
 }
 
-/* ---------------- RELATED PRODUCTS ---------------- */
-const container = document.getElementById("relatedCarousel");
+/* ================= RELATED PRODUCTS ================= */
+const carousel = document.getElementById("relatedCarousel");
 
-const relatedProducts = products.filter(
-  (p) => p.category === product.category && p.slug !== product.slug
-);
+function renderRelated() {
+  const related = products.filter(p =>
+    p.category === product.category && p.slug !== product.slug
+  );
 
-function scrollCarousel(amount) {
-  container.scrollBy({ left: amount, behavior: "smooth" });
-}
+  carousel.innerHTML = "";
 
-function renderRelatedProducts() {
-  container.innerHTML = "";
-
-  relatedProducts.forEach((p) => {
-    const card = document.createElement("div");
-    card.className = "product-card";
-
-    let stars = "";
-    for (let i = 0; i < 5; i++) {
-      stars += i < p.avgRating
-        ? '<i class="fas fa-star"></i>'
-        : '<i class="far fa-star"></i>';
-    }
-
-    card.innerHTML = `
-      <div class="product-image-container">
-        <img src="${p.images[0]}" />
+  related.forEach(p => {
+    carousel.innerHTML += `
+      <div class="product-card">
+        <img src="${p.images[0]}" width="100%">
+        <h4>${p.name}</h4>
+        <p>₹${p.price}</p>
       </div>
-
-      <h3 class="product-title">
-        <a href="product.html?slug=${p.slug}">
-          ${p.name.slice(0, 25)}...
-        </a>
-      </h3>
-
-      <div class="product-rating">${stars}</div>
-      <div class="product-price">₹${p.price.toFixed(2)}</div>
     `;
-
-    container.appendChild(card);
   });
 }
 
-/* ---------------- INIT ---------------- */
-renderProductDetail(product);
-renderRelatedProducts();
+function scrollCarousel(x) {
+  carousel.scrollBy({ left: x, behavior: "smooth" });
+}
+
+/* ================= INIT ================= */
+renderProduct();
+renderRelated();
 updateCartCount();
 
 </script>
