@@ -10,7 +10,7 @@
 </head>
 <style>
 /* =======================
-   RELATED PRODUCTS FIXED
+   RELATED PRODUCTS FIX (CLEAN VERSION)
 ======================= */
 
 .carousel-container {
@@ -18,51 +18,46 @@
   margin: 3rem auto;
   padding: 1rem;
   position: relative;
-  overflow: hidden;
 }
 
+/* SCROLL ROW */
 .product-carousel {
   display: flex;
-  gap: 1rem;
+  gap: 16px;
   overflow-x: auto;
   scroll-behavior: smooth;
-  padding: 1rem 0;
+  padding: 10px 5px;
 
   /* IMPORTANT FIX */
-  white-space: nowrap;
-  scrollbar-width: none;
+  flex-wrap: nowrap;
+  -webkit-overflow-scrolling: touch;
 }
 
+/* HIDE SCROLLBAR */
 .product-carousel::-webkit-scrollbar {
   display: none;
 }
 
-/* =======================
-   PRODUCT CARD FIX
-======================= */
-
+/* CARD */
 .product-card {
   flex: 0 0 auto;
-  width: 220px;           /* FIXED WIDTH */
-  min-width: 220px;
-  max-width: 220px;
-
+  width: 200px;
   background: #fff;
   border-radius: 12px;
-  padding: 12px;
+  padding: 10px;
   text-align: center;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 
-  /* IMPORTANT */
-  box-sizing: border-box;
+  /* IMPORTANT FIX */
+  overflow: hidden;
 }
 
-/* IMAGE FIX */
+/* IMAGE */
 .product-image-container {
   width: 100%;
-  height: 180px;   /* FIX HEIGHT */
-  overflow: hidden;
+  height: 170px;
   border-radius: 10px;
+  overflow: hidden;
 }
 
 .product-image-container img {
@@ -71,11 +66,11 @@
   object-fit: cover;
 }
 
-/* TITLE FIX (NO CUT) */
+/* TITLE FIX */
 .product-title {
   font-size: 14px;
-  margin: 10px 0;
-  white-space: normal;   /* allow wrap */
+  margin: 8px 0;
+  white-space: normal;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -83,46 +78,37 @@
 /* PRICE */
 .product-price {
   font-weight: bold;
-  margin-top: 5px;
 }
 
-/* =======================
-   NAV BUTTON FIX
-======================= */
-
+/* NAV BUTTONS */
 .carousel-nav {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   background: #000;
   color: #fff;
-  padding: 10px;
+  padding: 8px;
   border-radius: 50%;
   cursor: pointer;
   z-index: 10;
 }
 
 .carousel-nav.left {
-  left: 10px;
+  left: 5px;
 }
 
 .carousel-nav.right {
-  right: 10px;
+  right: 5px;
 }
 
-/* =======================
-   MOBILE FIX
-======================= */
-
+/* MOBILE FIX */
 @media (max-width: 768px) {
   .product-card {
-    width: 170px;
-    min-width: 170px;
-    max-width: 170px;
+    width: 160px;
   }
 
   .product-image-container {
-    height: 150px;
+    height: 140px;
   }
 }
 
