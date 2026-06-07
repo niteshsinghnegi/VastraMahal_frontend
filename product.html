@@ -24,9 +24,24 @@
       --font-body:    'DM Sans', sans-serif;
       --trans: .25s ease;
     }
+    /* DARK MODE */
+body.dark-mode {
+  --bg: #121212;
+  --ink: #ffffff;
+  --muted: #b3b3b3;
+  --border: #333333;
+  --white: #1e1e1e;
+  --card: #1e1e1e;
+}
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: var(--font-body); background: var(--cream); color: var(--ink); }
+    body { font-family: var(--font-body); background: var(--cream); color: var(--ink);
+    
+  font-family: var(--font-b);
+  background: var(--bg);
+  color: var(--ink);
+  overflow-x: hidden;
+} 
 
     /* ---- PRODUCT LAYOUT ---- */
     .product-container {
