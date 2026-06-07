@@ -551,7 +551,7 @@
       </div>
     </footer>
     <script src="products.js"></script>
-    <script src="product.js"></script>
+    <!-- <script src="product.js"></script> -->
     <script src="navbar.js"></script>
     <script src="constant.js"></script>
 
@@ -560,9 +560,8 @@
    
 
     <script src="modal.js"></script>
-    <script>
-  
-    
+<script>
+
 renderAuthModal();
 
 const productDetailContainer = document.getElementById("productDetail");
@@ -579,7 +578,9 @@ function saveCart(cart) {
 }
 
 function updateCartUI(cart = getCart()) {
-  cartCountitems.textContent = cart.length;
+  if (cartCountitems) {
+    cartCountitems.textContent = cart.length;
+  }
 }
 
 function addToCart(product) {
@@ -590,8 +591,8 @@ function addToCart(product) {
     name: product.name,
     price: product.price,
     images: product.images,
-    selectedColor: product.selectedColor || null,
-    selectedSize: product.selectedSize || null,
+    selectedColor: product.selectedColor,
+    selectedSize: product.selectedSize,
     qty: 1
   });
 
@@ -616,10 +617,14 @@ const createThumbnails = (images = []) =>
 
 /* ---------------- RENDER PRODUCT ---------------- */
 function renderProductDetail(product) {
+
   if (!product) {
     productDetailContainer.innerHTML = "<p>Product not found</p>";
     return;
   }
+
+  product.selectedColor = null;
+  product.selectedSize = null;
 
   productDetailContainer.innerHTML = `
     <div class="image-gallery">
@@ -633,28 +638,74 @@ function renderProductDetail(product) {
     </div>
 
     <div class="product-section">
-      <span class="brand">${product.brand || ''}</span>
-      <h1 class="product-name">${product.name}</h1>
+
+      <span class="brand">${product.brand || ""}</span>
+
+      <h1 class="product-name">
+        ${product.name}
+      </h1>
 
       <div class="rating">
         <i class="fa-solid fa-star"></i>
         <span>${product.avgRating || 0} (${product.numReviews || 0})</span>
       </div>
 
-      <div class="price">₹${product.price.toFixed(2)}</div>
+      <div class="price">
+        ₹${product.price.toFixed(2)}
+      </div>
+
+      ${
+        product.colors?.length
+          ? `
+          <div class="product-option">
+            <h4>Select Color</h4>
+            <div class="color-options">
+              ${product.colors.map(color => `
+                <button
+                  class="color-btn"
+                  data-color="${color}">
+                  ${color}
+                </button>
+              `).join("")}
+            </div>
+          </div>
+        `
+          : ""
+      }
+
+      ${
+        product.sizes?.length
+          ? `
+          <div class="product-option">
+            <h4>Select Size</h4>
+            <div class="size-options">
+              ${product.sizes.map(size => `
+                <button
+                  class="size-btn"
+                  data-size="${size}">
+                  ${size}
+                </button>
+              `).join("")}
+            </div>
+          </div>
+        `
+          : ""
+      }
 
       <button class="add-to-cart-btn">
         <i class="fa-solid fa-cart-plus"></i>
         Add to Cart
       </button>
+
     </div>
   `;
 
-  /* IMAGE SWITCH */
+  /* ---------------- IMAGE SWITCH ---------------- */
   const mainImage = document.getElementById("mainImage");
 
   document.querySelectorAll(".thumbnails img").forEach((thumb, i) => {
     thumb.addEventListener("click", () => {
+
       document.querySelectorAll(".thumbnails img")
         .forEach(t => t.classList.remove("active"));
 
@@ -669,37 +720,87 @@ function renderProductDetail(product) {
     });
   });
 
-  /* ADD TO CART (SAFE SINGLE HANDLER) */
-  const btn = document.querySelector(".add-to-cart-btn");
+  /* ---------------- COLOR SELECT ---------------- */
+  document.querySelectorAll(".color-btn").forEach(btn => {
 
-  if (btn) {
     btn.addEventListener("click", () => {
-      addToCart(product);
+
+      document.querySelectorAll(".color-btn")
+        .forEach(b => b.classList.remove("active"));
+
+      btn.classList.add("active");
+
+      product.selectedColor = btn.dataset.color;
     });
-  }
+
+  });
+
+  /* ---------------- SIZE SELECT ---------------- */
+  document.querySelectorAll(".size-btn").forEach(btn => {
+
+    btn.addEventListener("click", () => {
+
+      document.querySelectorAll(".size-btn")
+        .forEach(b => b.classList.remove("active"));
+
+      btn.classList.add("active");
+
+      product.selectedSize = btn.dataset.size;
+    });
+
+  });
+
+  /* ---------------- ADD TO CART ---------------- */
+  const addBtn = document.querySelector(".add-to-cart-btn");
+
+  addBtn?.addEventListener("click", () => {
+
+    if (product.colors?.length && !product.selectedColor) {
+      alert("Please select a color");
+      return;
+    }
+
+    if (product.sizes?.length && !product.selectedSize) {
+      alert("Please select a size");
+      return;
+    }
+
+    addToCart(product);
+  });
+
 }
 
 /* ---------------- RELATED PRODUCTS ---------------- */
 const container = document.getElementById("relatedCarousel");
 
-const relatedProducts = products.filter(
-  p => p.category === product.category && p.slug !== product.slug
-);
-
 function scrollCarousel(amount) {
-  container.scrollBy({ left: amount, behavior: "smooth" });
+  container.scrollBy({
+    left: amount,
+    behavior: "smooth"
+  });
 }
 
 function renderRelatedProducts() {
+
+  if (!product || !container) return;
+
+  const relatedProducts = products.filter(
+    p =>
+      p.category === product.category &&
+      p.slug !== product.slug
+  );
+
   container.innerHTML = "";
 
   relatedProducts.forEach(p => {
+
     const card = document.createElement("div");
+
     card.className = "product-card";
 
     card.innerHTML = `
       <div class="product-image-container">
-        <img src="${p.images?.[0] || ''}" />
+        <img src="${p.images?.[0] || ""}">
       </div>
 
       <h3 class="product-title">
@@ -708,17 +809,22 @@ function renderRelatedProducts() {
         </a>
       </h3>
 
-      <div class="product-price">₹${p.price.toFixed(2)}</div>
+      <div class="product-price">
+        ₹${p.price.toFixed(2)}
+      </div>
     `;
 
     container.appendChild(card);
+
   });
+
 }
 
 /* ---------------- INIT ---------------- */
 renderProductDetail(product);
 renderRelatedProducts();
-  </script>
+
+</script>
 
 </body>
 
