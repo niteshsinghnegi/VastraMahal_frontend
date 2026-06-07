@@ -493,8 +493,8 @@
       const cartCountitems = document.getElementById("cartCountitems");
 
       const cart = JSON.parse(localStorage.getItem("cart")) || [];
-      cart.forEach(item => {
-  item.quantity = Number(item.quantity) || 1;
+cart.forEach(item => {
+  item.quantity = Number(item.quantity || item.qty) || 1;
 });
       if (cart.length > 0) {
         cartCountitems.textContent = cart.length;
