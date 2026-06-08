@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About – VastraMahal</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:        #f9f6f1;
+      --ink:       #18181b;
+      --muted:     #78716c;
+      --border:    #e7e0d8;
+      --accent:    #b45309;
+      --accent-lt: #fef3c7;
+      --white:     #ffffff;
+      --card:      #ffffff;
+      --red:       #991b1b;
+      --font-d: 'Playfair Display', Georgia, serif;
+      --font-b: 'Jost', sans-serif;
+      --r: 12px;
+      --t: .3s ease;
+    }
+    body.dark-mode {
+      --bg: #121212;
+      --ink: #ffffff;
+      --muted: #b3b3b3;
+      --border: #333333;
+      --white: #1e1e1e;
+      --card: #1e1e1e;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-b); background: var(--bg); color: var(--ink); overflow-x: hidden; }
+
+    /* ── PAGE HERO ── */
+    .about-hero {
+      position: relative;
+      height: 480px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin-bottom: 0;
+    }
+    .about-hero img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(.45);
+    }
+    .about-hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 0 24px;
+    }
+    .about-hero-content .eyebrow {
+      font-size: 12px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    .about-hero-content h1 {
+      font-family: var(--font-d);
+      font-size: clamp(36px, 6vw, 72px);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.05;
+      margin-bottom: 18px;
+    }
+    .about-hero-content p {
+      font-size: 16px;
+      color: rgba(255,255,255,.7);
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ── WRAPPER ── */
+    .page-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 72px 28px 80px;
+    }
+
+    /* ── STORY SECTION ── */
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      margin-bottom: 80px;
+    }
+    .story-grid .img-wrap {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      aspect-ratio: 4/5;
+    }
+    .story-grid .img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .story-grid .img-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: -12px;
+      right: -12px;
+      width: 60%;
+      height: 60%;
+      border: 3px solid var(--accent);
+      border-radius: 12px;
+      z-index: -1;
+    }
+    .story-text .eyebrow {
+      font-size: 11px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .story-text h2 {
+      font-family: var(--font-d);
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 22px;
+    }
+    .story-text h2 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .story-text p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    /* ── STATS ROW ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+      margin-bottom: 80px;
+    }
+    .stat-box {
+      background: var(--card);
+      padding: 36px 24px;
+      text-align: center;
+    }
+    .stat-box .num {
+      font-family: var(--font-d);
+      font-size: 42px;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-box .label {
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    /* ── VALUES ── */
+    .values-section {
+      margin-bottom: 80px;
+    }
+    .values-section .section-label {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .values-section .section-label .eyebrow {
+      font-size: 11px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .values-section .section-label h2 {
+      font-family: var(--font-d);
+      font-size: clamp(26px, 3.5vw, 40px);
+      font-weight: 700;
+    }
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .value-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px 28px;
+      transition: transform var(--t), box-shadow var(--t);
+    }
+    .value-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(0,0,0,.08);
+    }
+    .value-card .icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: var(--accent-lt);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .value-card h3 {
+      font-family: var(--font-d);
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .value-card p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    /* ── TEAM ── */
+    .team-section {
+      margin-bottom: 80px;
+    }
+    .team-section .section-label {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .team-section .section-label .eyebrow {
+      font-size: 11px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .team-section .section-label h2 {
+      font-family: var(--font-d);
+      font-size: clamp(26px, 3.5vw, 40px);
+      font-weight: 700;
+    }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .team-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      text-align: center;
+      transition: transform var(--t), box-shadow var(--t);
+    }
+    .team-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(0,0,0,.08);
+    }
+    .team-card .avatar {
+      height: 240px;
+      overflow: hidden;
+      background: #f0ebe3;
+    }
+    .team-card .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .45s ease;
+    }
+    .team-card:hover .avatar img { transform: scale(1.06); }
+    .team-card-body { padding: 24px 20px; }
+    .team-card-body h3 {
+      font-family: var(--font-d);
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .team-card-body .role {
+      font-size: 12px;
+      color: var(--accent);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .team-card-body p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── CREATOR BADGE ── */
+    .creator-strip {
+      background: var(--ink);
+      border-radius: 18px;
+      padding: 48px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      overflow: hidden;
+      position: relative;
+    }
+    .creator-strip::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: rgba(180,83,9,.18);
+      pointer-events: none;
+    }
+    .creator-avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 3px solid var(--accent);
+      overflow: hidden;
+      flex-shrink: 0;
+      background: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .creator-avatar span {
+      font-family: var(--font-d);
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--accent);
+    }
+    .creator-info { flex: 1; }
+    .creator-info .eyebrow {
+      font-size: 11px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.45);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .creator-info h3 {
+      font-family: var(--font-d);
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .creator-info p {
+      font-size: 14px;
+      color: rgba(255,255,255,.6);
+      line-height: 1.7;
+      max-width: 480px;
+    }
+    .creator-social {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .creator-social a {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,.65);
+      font-size: 14px;
+      text-decoration: none;
+      transition: all var(--t);
+    }
+    .creator-social a:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .story-grid { grid-template-columns: 1fr; gap: 40px; }
+      .story-grid .img-wrap { aspect-ratio: 16/9; }
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .values-grid { grid-template-columns: 1fr 1fr; }
+      .team-grid { grid-template-columns: 1fr 1fr; }
+      .creator-strip { flex-direction: column; text-align: center; padding: 36px 24px; }
+      .creator-social { justify-content: center; }
+    }
+    @media (max-width: 600px) {
+      .values-grid { grid-template-columns: 1fr; }
+      .team-grid { grid-template-columns: 1fr; }
+      .page-wrapper { padding: 48px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="main-header">
+    <nav class="navbar">
+      <a href="index.html" class="nav-logo">VastraMahal</a>
+      <div class="navbar-links">
+        <ul class="nav-links">
+          <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+          <li class="nav-item">
+            <a href="shop.html" class="nav-link">Shop <i class="fa-solid fa-chevron-down fa-xs"></i></a>
+          </li>
+          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+          <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+        <div>
+          <ul class="mobile-links">
+            <li class="nav-item">
+              <button class="btn" id="loginBtn" onclick="openAuthModal()">Login</button>
+            </li>
+            <li class="profile-dropdown profileDropdown" id="profileDropdown">
+              <button class="btn profile-btn" id="profileSection">A</button>
+              <div id="dropdownMenu" class="dropdown-content">
+                <a href="profile.html">My Profile</a>
+                <a href="orders.html">My Orders</a>
+                <button class="btn logoutBtn" id="logoutBtn">Logout</button>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a href="cart.html" class="cart">
+                <span id="cartCountitems">0</span>
+                <i class="fa-solid fa-cart-plus"></i>
+              </a>
+            </li>
+            <li class="dark-toggle" id="dark-toggle">🌙</li>
+            <button class="menu-btn" id="menu-btn"><i class="fa-solid fa-bars"></i></button>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="about-hero">
+    <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=1600&auto=format&fit=crop" alt="VastraMahal Story" />
+    <div class="about-hero-content">
+      <p class="eyebrow">Our Story</p>
+      <h1>Fashion with<br /><em>Purpose &amp; Soul</em></h1>
+      <p>Born from a passion for style and a belief that quality clothing should be accessible to everyone in India.</p>
+    </div>
+  </section>
+
+  <div class="page-wrapper">
+
+    <!-- STORY -->
+    <section class="story-grid">
+      <div class="img-wrap">
+        <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=700&auto=format&fit=crop" alt="Our Story" />
+      </div>
+      <div class="story-text">
+        <p class="eyebrow">Who We Are</p>
+        <h2>Dressing India with <em>Confidence</em> &amp; Style</h2>
+        <p>VastraMahal started as a dream — a marketplace where every Indian could find clothing that speaks to their personality, culture, and aspirations. From the bustling streets of Delhi to the serene ghats of Varanasi, fashion is woven into our identity.</p>
+        <p>We curate the finest collections across men's, women's, and accessories — blending contemporary global trends with the timeless elegance of Indian sensibility. Every piece is handpicked for quality, comfort, and that undeniable feeling of looking your absolute best.</p>
+        <p>Today, VastraMahal serves thousands of happy customers across the country, with a growing catalogue that celebrates diversity in fashion.</p>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="num">10K+</div>
+        <div class="label">Happy Customers</div>
+      </div>
+      <div class="stat-box">
+        <div class="num">500+</div>
+        <div class="label">Products</div>
+      </div>
+      <div class="stat-box">
+        <div class="num">50+</div>
+        <div class="label">Cities Served</div>
+      </div>
+      <div class="stat-box">
+        <div class="num">4.8★</div>
+        <div class="label">Avg Rating</div>
+      </div>
+    </div>
+
+    <!-- VALUES -->
+    <section class="values-section">
+      <div class="section-label">
+        <p class="eyebrow">What Drives Us</p>
+        <h2>Our Core Values</h2>
+      </div>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="icon"><i class="fas fa-gem"></i></div>
+          <h3>Quality First</h3>
+          <p>Every product in our catalogue goes through strict quality checks. We believe you deserve clothing that lasts, feels great, and looks even better.</p>
+        </div>
+        <div class="value-card">
+          <div class="icon"><i class="fas fa-leaf"></i></div>
+          <h3>Sustainability</h3>
+          <p>We work with suppliers who share our commitment to ethical production and sustainable materials, because fashion shouldn't cost the earth.</p>
+        </div>
+        <div class="value-card">
+          <div class="icon"><i class="fas fa-users"></i></div>
+          <h3>Inclusive Fashion</h3>
+          <p>Style has no size, gender, or budget. We celebrate every body and every identity, offering options that make everyone feel seen and celebrated.</p>
+        </div>
+        <div class="value-card">
+          <div class="icon"><i class="fas fa-truck"></i></div>
+          <h3>Fast Delivery</h3>
+          <p>Your fashion shouldn't wait. We ensure speedy, reliable delivery to your doorstep across India — because excitement should come quickly.</p>
+        </div>
+        <div class="value-card">
+          <div class="icon"><i class="fas fa-shield-alt"></i></div>
+          <h3>Secure Shopping</h3>
+          <p>Shop with complete peace of mind. Our platform is fully secured with encrypted transactions and a hassle-free return policy.</p>
+        </div>
+        <div class="value-card">
+          <div class="icon"><i class="fas fa-headset"></i></div>
+          <h3>Customer Love</h3>
+          <p>Our support team is always just a message away. We treat every customer like family, because that's exactly who you are to us.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEAM -->
+    <section class="team-section">
+      <div class="section-label">
+        <p class="eyebrow">The People</p>
+        <h2>Meet Our Team</h2>
+      </div>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="avatar">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&crop=face" alt="Arjun Sharma" />
+          </div>
+          <div class="team-card-body">
+            <h3>Arjun Sharma</h3>
+            <p class="role">CEO & Co-Founder</p>
+            <p>Visionary leader with 12 years in retail and e-commerce. Arjun built VastraMahal with the belief that great fashion should reach every corner of India.</p>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="avatar">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&auto=format&fit=crop&crop=face" alt="Priya Mehta" />
+          </div>
+          <div class="team-card-body">
+            <h3>Priya Mehta</h3>
+            <p class="role">Head of Design</p>
+            <p>A fashion graduate from NIFT Delhi, Priya curates every collection with an eye for trends, quality, and the diverse tastes of Indian shoppers.</p>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="avatar">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&auto=format&fit=crop&crop=face" alt="Rahul Verma" />
+          </div>
+          <div class="team-card-body">
+            <h3>Rahul Verma</h3>
+            <p class="role">Head of Technology</p>
+            <p>The tech brain behind VastraMahal's seamless shopping experience. Rahul ensures the platform is fast, secure, and delightful to use.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CREATOR BADGE -->
+    <div class="creator-strip">
+      <div class="creator-avatar">
+        <span>N</span>
+      </div>
+      <div class="creator-info">
+        <p class="eyebrow">Crafted with ❤️</p>
+        <h3>Nitesh Singh Negi</h3>
+        <p>VastraMahal was designed and developed by Nitesh Singh Negi — a passionate developer who believes great UI can make shopping joyful. Every pixel, every animation, every interaction on this platform carries his dedication and craft.</p>
+        <div class="creator-social">
+          <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="main-footer">
+    <div class="footer-content">
+      <div class="footer-column">
+        <h4>VastraMahal</h4>
+        <p>Your one-stop destination for the latest trends in fashion and accessories. Quality and style delivered to your doorstep.</p>
+        <div class="social-icons">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+        </div>
+      </div>
+      <div class="footer-column">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="shop.html?gender=Men">Men's Collection</a></li>
+          <li><a href="shop.html?gender=Women">Women's Fashion</a></li>
+          <li><a href="shop.html?category=Accessories">Accessories</a></li>
+          <li><a href="#">New Arrivals</a></li>
+          <li><a href="#">Sale & Offers</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Shipping & Returns</a></li>
+          <li><a href="#">Track Your Order</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Stay Updated</h4>
+        <p>Subscribe to our newsletter for the latest updates and offers.</p>
+        <form class="newsletter-form">
+          <input type="email" placeholder="Your email address" required />
+          <button type="submit">Go</button>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 VastraMahal. All Rights Reserved. Created by Nitesh Singh Negi.</p>
+      <div class="payment-icons">
+        <i class="fab fa-cc-visa"></i>
+        <i class="fab fa-cc-mastercard"></i>
+        <i class="fab fa-cc-paypal"></i>
+        <i class="fab fa-cc-amex"></i>
+      </div>
+    </div>
+  </footer>
+
+  <script src="navbar.js"></script>
+  <script src="modal.js"></script>
+  <script src="constant.js"></script>
+  <script>
+    if (typeof renderAuthModal === 'function') renderAuthModal();
+  </script>
+</body>
+</html>

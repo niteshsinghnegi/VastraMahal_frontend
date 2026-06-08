@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact – VastraMahal</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:        #f9f6f1;
+      --ink:       #18181b;
+      --muted:     #78716c;
+      --border:    #e7e0d8;
+      --accent:    #b45309;
+      --accent-lt: #fef3c7;
+      --white:     #ffffff;
+      --card:      #ffffff;
+      --font-d: 'Playfair Display', Georgia, serif;
+      --font-b: 'Jost', sans-serif;
+      --r: 12px;
+      --t: .3s ease;
+    }
+    body.dark-mode {
+      --bg: #121212;
+      --ink: #ffffff;
+      --muted: #b3b3b3;
+      --border: #333333;
+      --white: #1e1e1e;
+      --card: #1e1e1e;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-b); background: var(--bg); color: var(--ink); overflow-x: hidden; }
+
+    /* ── PAGE HERO ── */
+    .contact-hero {
+      position: relative;
+      height: 380px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .contact-hero img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(.42);
+    }
+    .contact-hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 0 24px;
+    }
+    .contact-hero-content .eyebrow {
+      font-size: 12px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    .contact-hero-content h1 {
+      font-family: var(--font-d);
+      font-size: clamp(34px, 5.5vw, 64px);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+    .contact-hero-content p {
+      font-size: 15px;
+      color: rgba(255,255,255,.65);
+      max-width: 460px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ── PAGE WRAPPER ── */
+    .page-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 72px 28px 80px;
+    }
+
+    /* ── CONTACT LAYOUT ── */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 56px;
+      align-items: start;
+    }
+
+    /* ── INFO PANEL ── */
+    .info-panel {}
+    .info-panel .eyebrow {
+      font-size: 11px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .info-panel h2 {
+      font-family: var(--font-d);
+      font-size: clamp(26px, 3.5vw, 38px);
+      font-weight: 700;
+      margin-bottom: 18px;
+      line-height: 1.2;
+    }
+    .info-panel > p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 36px;
+    }
+
+    .contact-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+    .contact-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      transition: transform var(--t), box-shadow var(--t);
+    }
+    .contact-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,.07);
+    }
+    .contact-card .cc-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: var(--accent-lt);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .contact-card .cc-text h4 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: var(--ink);
+    }
+    .contact-card .cc-text p, .contact-card .cc-text a {
+      font-size: 14px;
+      color: var(--muted);
+      text-decoration: none;
+      line-height: 1.5;
+    }
+    .contact-card .cc-text a:hover { color: var(--accent); }
+
+    .social-row {
+      display: flex;
+      gap: 10px;
+    }
+    .social-row a {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 15px;
+      text-decoration: none;
+      transition: all var(--t);
+    }
+    .social-row a:hover { background: var(--ink); border-color: var(--ink); color: #fff; }
+
+    /* ── FORM PANEL ── */
+    .form-panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 44px 40px;
+    }
+    .form-panel h3 {
+      font-family: var(--font-d);
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .form-panel .sub {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin-bottom: 18px;
+    }
+    .form-group label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: .04em;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 13px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-b);
+      font-size: 14px;
+      outline: none;
+      transition: border-color var(--t), box-shadow var(--t);
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(180,83,9,.1);
+    }
+    .form-group textarea { resize: vertical; min-height: 130px; }
+    .form-group select { appearance: none; cursor: pointer; }
+
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 15px 36px;
+      background: var(--ink);
+      color: var(--white);
+      border: none;
+      border-radius: 100px;
+      font-family: var(--font-b);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background var(--t), transform var(--t);
+      width: 100%;
+      justify-content: center;
+      margin-top: 6px;
+    }
+    .submit-btn:hover { background: var(--accent); transform: translateY(-2px); }
+
+    /* SUCCESS STATE */
+    .success-msg {
+      display: none;
+      background: #d1fae5;
+      border: 1px solid #6ee7b7;
+      border-radius: 10px;
+      padding: 16px 20px;
+      color: #065f46;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 20px;
+      align-items: center;
+      gap: 10px;
+    }
+    .success-msg.show { display: flex; }
+
+    /* ── FAQ ── */
+    .faq-section {
+      margin-top: 72px;
+    }
+    .faq-head {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .faq-head .eyebrow {
+      font-size: 11px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .faq-head h2 {
+      font-family: var(--font-d);
+      font-size: clamp(26px, 3.5vw, 38px);
+      font-weight: 700;
+    }
+    .faq-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .faq-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .faq-question {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      background: none;
+      border: none;
+      text-align: left;
+      cursor: pointer;
+      font-family: var(--font-b);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+      gap: 12px;
+    }
+    .faq-question i {
+      flex-shrink: 0;
+      color: var(--muted);
+      transition: transform var(--t);
+      font-size: 13px;
+    }
+    .faq-item.open .faq-question i { transform: rotate(45deg); color: var(--accent); }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .4s ease, padding .3s ease;
+      padding: 0 24px;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+    .faq-item.open .faq-answer { max-height: 300px; padding: 0 24px 20px; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .contact-layout { grid-template-columns: 1fr; gap: 40px; }
+      .faq-grid { grid-template-columns: 1fr; }
+      .form-panel { padding: 32px 24px; }
+    }
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+      .page-wrapper { padding: 48px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="main-header">
+    <nav class="navbar">
+      <a href="index.html" class="nav-logo">VastraMahal</a>
+      <div class="navbar-links">
+        <ul class="nav-links">
+          <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+          <li class="nav-item">
+            <a href="shop.html" class="nav-link">Shop <i class="fa-solid fa-chevron-down fa-xs"></i></a>
+          </li>
+          <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+          <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+        <div>
+          <ul class="mobile-links">
+            <li class="nav-item">
+              <button class="btn" id="loginBtn" onclick="openAuthModal()">Login</button>
+            </li>
+            <li class="profile-dropdown profileDropdown" id="profileDropdown">
+              <button class="btn profile-btn" id="profileSection">A</button>
+              <div id="dropdownMenu" class="dropdown-content">
+                <a href="profile.html">My Profile</a>
+                <a href="orders.html">My Orders</a>
+                <button class="btn logoutBtn" id="logoutBtn">Logout</button>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a href="cart.html" class="cart">
+                <span id="cartCountitems">0</span>
+                <i class="fa-solid fa-cart-plus"></i>
+              </a>
+            </li>
+            <li class="dark-toggle" id="dark-toggle">🌙</li>
+            <button class="menu-btn" id="menu-btn"><i class="fa-solid fa-bars"></i></button>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="contact-hero">
+    <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1600&auto=format&fit=crop" alt="Contact VastraMahal" />
+    <div class="contact-hero-content">
+      <p class="eyebrow">Get In Touch</p>
+      <h1>We'd Love to<br />Hear From You</h1>
+      <p>Questions, feedback, or just want to say hello? Our team is always ready to help you.</p>
+    </div>
+  </section>
+
+  <div class="page-wrapper">
+
+    <div class="contact-layout">
+
+      <!-- INFO PANEL -->
+      <div class="info-panel">
+        <p class="eyebrow">Contact Info</p>
+        <h2>Let's Start a Conversation</h2>
+        <p>Whether you have a question about an order, need styling advice, or just want to share feedback — we're always listening.</p>
+
+        <div class="contact-cards">
+          <div class="contact-card">
+            <div class="cc-icon"><i class="fas fa-envelope"></i></div>
+            <div class="cc-text">
+              <h4>Email Us</h4>
+              <a href="mailto:support@vastramahal.in">support@vastramahal.in</a>
+            </div>
+          </div>
+          <div class="contact-card">
+            <div class="cc-icon"><i class="fas fa-phone"></i></div>
+            <div class="cc-text">
+              <h4>Call Us</h4>
+              <a href="tel:+918800001234">+91 88000 01234</a>
+              <p>Mon – Sat, 9 AM – 7 PM IST</p>
+            </div>
+          </div>
+          <div class="contact-card">
+            <div class="cc-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="cc-text">
+              <h4>Our Office</h4>
+              <p>42, Fashion Street, Connaught Place<br />New Delhi – 110001, India</p>
+            </div>
+          </div>
+          <div class="contact-card">
+            <div class="cc-icon"><i class="fas fa-clock"></i></div>
+            <div class="cc-text">
+              <h4>Business Hours</h4>
+              <p>Monday – Saturday: 9 AM – 7 PM</p>
+              <p>Sunday: Closed</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="social-row">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+
+      <!-- FORM PANEL -->
+      <div class="form-panel">
+        <h3>Send Us a Message</h3>
+        <p class="sub">We'll get back to you within 24 hours.</p>
+
+        <div class="success-msg" id="successMsg">
+          <i class="fas fa-check-circle" style="font-size:18px;"></i>
+          Your message has been sent! We'll reply within 24 hours. 🎉
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fname">First Name</label>
+            <input type="text" id="fname" placeholder="Arjun" />
+          </div>
+          <div class="form-group">
+            <label for="lname">Last Name</label>
+            <input type="text" id="lname" placeholder="Sharma" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="you@example.com" />
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number (Optional)</label>
+          <input type="tel" id="phone" placeholder="+91 98765 43210" />
+        </div>
+
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <select id="subject">
+            <option value="" disabled selected>Select a topic…</option>
+            <option>Order Enquiry</option>
+            <option>Return / Exchange</option>
+            <option>Product Question</option>
+            <option>Payment Issue</option>
+            <option>General Feedback</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Your Message</label>
+          <textarea id="message" placeholder="Tell us how we can help you…"></textarea>
+        </div>
+
+        <button class="submit-btn" id="submitBtn" onclick="handleSubmit()">
+          Send Message <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <section class="faq-section">
+      <div class="faq-head">
+        <p class="eyebrow">Quick Answers</p>
+        <h2>Frequently Asked Questions</h2>
+      </div>
+      <div class="faq-grid">
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            How long does delivery take? <i class="fas fa-plus"></i>
+          </button>
+          <div class="faq-answer">Standard delivery takes 4–7 business days across India. Express delivery (1–2 days) is available in select cities at an additional charge.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            What is your return policy? <i class="fas fa-plus"></i>
+          </button>
+          <div class="faq-answer">We offer a 15-day hassle-free return policy. Items must be unused, unwashed, and in original packaging with tags attached. Initiate returns from your order page.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Are all products authentic? <i class="fas fa-plus"></i>
+          </button>
+          <div class="faq-answer">Absolutely. Every product is sourced directly from verified brands and manufacturers. We maintain strict quality checks before any item goes live on our platform.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Can I track my order? <i class="fas fa-plus"></i>
+          </button>
+          <div class="faq-answer">Yes! Once your order is dispatched, you'll receive a tracking link via SMS and email. You can also track orders from the "My Orders" section in your profile.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Do you ship internationally? <i class="fas fa-plus"></i>
+          </button>
+          <div class="faq-answer">Currently, VastraMahal ships only within India. We're working on expanding internationally — stay tuned for updates on our social media channels!</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            How do I use a promo code? <i class="fas fa-plus"></i>
+          </button>
+          <div class="faq-answer">Add items to your cart and proceed to checkout. You'll find a "Promo Code" field on the payment page. Enter your code there to apply the discount instantly.</div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="main-footer">
+    <div class="footer-content">
+      <div class="footer-column">
+        <h4>VastraMahal</h4>
+        <p>Your one-stop destination for the latest trends in fashion and accessories. Quality and style delivered to your doorstep.</p>
+        <div class="social-icons">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+        </div>
+      </div>
+      <div class="footer-column">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="shop.html?gender=Men">Men's Collection</a></li>
+          <li><a href="shop.html?gender=Women">Women's Fashion</a></li>
+          <li><a href="shop.html?category=Accessories">Accessories</a></li>
+          <li><a href="#">New Arrivals</a></li>
+          <li><a href="#">Sale & Offers</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Shipping & Returns</a></li>
+          <li><a href="#">Track Your Order</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Stay Updated</h4>
+        <p>Subscribe to our newsletter for the latest updates and offers.</p>
+        <form class="newsletter-form">
+          <input type="email" placeholder="Your email address" required />
+          <button type="submit">Go</button>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 VastraMahal. All Rights Reserved. Created by Nitesh Singh Negi.</p>
+      <div class="payment-icons">
+        <i class="fab fa-cc-visa"></i>
+        <i class="fab fa-cc-mastercard"></i>
+        <i class="fab fa-cc-paypal"></i>
+        <i class="fab fa-cc-amex"></i>
+      </div>
+    </div>
+  </footer>
+
+  <script src="navbar.js"></script>
+  <script src="modal.js"></script>
+  <script src="constant.js"></script>
+  <script>
+    if (typeof renderAuthModal === 'function') renderAuthModal();
+
+    function handleSubmit() {
+      const fname = document.getElementById('fname').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      if (!fname || !email || !message) {
+        alert('Please fill in your name, email, and message.');
+        return;
+      }
+
+      const btn = document.getElementById('submitBtn');
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending…';
+      btn.disabled = true;
+
+      setTimeout(() => {
+        document.getElementById('successMsg').classList.add('show');
+        btn.innerHTML = 'Send Message <i class="fas fa-paper-plane"></i>';
+        btn.disabled = false;
+        document.getElementById('fname').value = '';
+        document.getElementById('lname').value = '';
+        document.getElementById('email').value = '';
+        document.getElementById('phone').value = '';
+        document.getElementById('message').value = '';
+        document.getElementById('subject').selectedIndex = 0;
+      }, 1400);
+    }
+
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+  </script>
+</body>
+</html>
